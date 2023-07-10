@@ -19,7 +19,7 @@ from YOLO_Video import video_detection
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'muhammadmoin'
+app.config['SECRET_KEY'] = 'mhotep'
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
 
