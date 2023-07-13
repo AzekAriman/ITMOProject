@@ -1,6 +1,8 @@
 from ultralytics import YOLO
 import cv2
 import math
+import datetime
+import os
 
 
 def video_detection(path_x):
@@ -9,10 +11,13 @@ def video_detection(path_x):
     cap = cv2.VideoCapture(video_capture)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
-    out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
+    # out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
 
     model = YOLO("../YOLO-Weights/ppe.pt")
     classNames = ["Weapon"]
+
+    frame_count = -1
+    skip_frames = 20  # Количество кадров для пропуска между сохранениями
 
     while True:
         success, img = cap.read()
@@ -33,9 +38,36 @@ def video_detection(path_x):
                 if class_name == 'Weapon':
                     color = (145, 104, 255)
                 if conf > 0.25:
-                    cv2.rectangle(img, (x1,y1), (x2,y2), color,3)
-                    cv2.rectangle(img, (x1,y1), c2, color, -1, cv2.LINE_AA)  # filled
-                    cv2.putText(img, label, (x1,y1-2),0, 1,[255,255,255], thickness=1,lineType=cv2.LINE_AA)
+                    cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
+                    cv2.rectangle(img, (x1, y1), c2, color, -1, cv2.LINE_AA)  # filled
+                    cv2.putText(img, label, (x1, y1 - 2), 0, 1, [255, 255, 255], thickness=1, lineType=cv2.LINE_AA)
+                if conf > 0.7:
+                    dir_name = "static/Predictions"
+                    # Проверяем, существует ли директория
+                    if not os.path.exists(dir_name):
+                        os.makedirs(dir_name)  # Создаем директорию, если ее нет
+                    frame_count += 1
+                    if frame_count % skip_frames == 0:
+                        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  # Получение текущего времени
+                        print(timestamp)
+                        resize_img = cv2.resize(img, (640, 480))
+                        # Расчет размера метки времени
+                        (label_width, label_height), baseline = cv2.getTextSize(timestamp, cv2.FONT_HERSHEY_SIMPLEX,
+                                                                                1.5, 3)
+                        # Получение размеров изображения
+                        height, width, _ = resize_img.shape
+                        # Отрисовка текста в нижнем правом углу, черный контур
+                        resize_img = cv2.putText(resize_img, timestamp, (width - label_width - 10, height - 10),
+                                                 cv2.FONT_HERSHEY_SIMPLEX,
+                                                 1.5, (0, 0, 0), 4, cv2.LINE_AA)
+                        # Отрисовка текста в нижнем правом углу, белый текст
+                        resize_img = cv2.putText(resize_img, timestamp, (width - label_width - 10, height - 10),
+                                                 cv2.FONT_HERSHEY_SIMPLEX,
+                                                 1.5, (255, 255, 255), 2, cv2.LINE_AA)
+
+                        is_saved = cv2.imwrite(os.path.join(dir_name, f"{timestamp}.jpg"), resize_img)
+                        print(f"Image saved: {is_saved}")
+
         yield img
         # out.write(img)
         # cv2.imshow("image", img)

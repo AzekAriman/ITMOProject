@@ -1,187 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <title>Weapon-Detection-YOLOv8</title>
     <style>
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: rgba(64, 64, 64, 1);
+            text-decoration: none;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+        }
         body{
-        font-family:Helvetica, sans-serif;
-        margin:0px;
-        padding:0px;
+            font-family: 'Roboto', sans-serif;
+            margin:0px;
+            padding:0px;
+            background-color:rgba(47, 39, 48, 1);
+            color:#FFF;
         }
         header.feature-box.right{
-        background-color:black;
-        color:white;
-        height:120px;
-        padding:5px;
-        text-align:right;
-        }
-        header.feature-box.below{
-        height:800px;
-        background-color:blue;
-        margin-top:-30px;
-        background-image:url("../static/images/header.png");
-        background-size:100%;
-        background-position:center;
+            background-color:rgba(214, 178, 145, 1);
+            color:white;
+            height:10;
+            width:30;
+            padding:5px;
+            text-align:right;
         }
         ul{
-        list-style:none;
-        padding:0px;}
+            list-style:none;
+            padding:0px;}
         li{
-        display:inline-block;
-        background-color:gray;
-        border-radius:10px;
-        padding:10px;
-        margin:10px;
+            border-bottom: 1px solid rgb(0 0 0 / 0%);
+            display:inline-block;
+            margin:10px;
         }
         li:hover{
-        background-color:red;
-        margin:10px;
+            border-bottom: 1px solid #000;
         }
         header a{
-        color:white;
-        text-decoration:none;
-        width:100%;
+            color:white;
+            text-decoration:none;
+            width:100%;
         }
-        .details{
-        height:80px;
-        margin:40px;
-        padding:0px;
-        font-size:40px;
-        background-color:gray;
-        text-align:center;
-        color:black;
-        }
-
 
         .features{
-        background:white;
-        color:gray;
-        display:flex;
-        flex-direction:row;
-        padding:20px;
+            display:flex;
+            flex-direction:row;
+            padding:50px;
 
         }
         .features figure
         {/*background:pink;*/
-        width:400px;
-        margin:auto;
-        text-align:center;
-        text-transform:uppercase;
+            width:400px;
+            margin:auto;
+            text-align:center;
+            text-transform:uppercase;
         }
         .features figure img{
-        border-radius:10%;
-        width:400px;
+            border-radius:10%;
+            width:400px;
         }
         div.main{
-        display:flex;
-        margin:40px;
-        letter-spacing:1px;
-        h1, h2, h3, h4, h5, h6 {
-          font-family: "Playfair Display";
-    letter-spacing: 5px;
+            display:flex;
+            margin:40px;
+            padding: 65px;
+            letter-spacing:1px;
         }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Roboto";
+            letter-spacing: 5px;
+        }
+        .textpart{
+            max-width: 700px;
         }
         .subpart2{
-        text-align:center;
-        text-transform:uppercase;
+            text-align:center;
+            text-transform:uppercase;
         }
         .subpart2 figure img{
-        border-radius:4%;
-        width:800px;
+            border-radius:4%;
+            width:800px;
         }
         .contactpage{
-        margin:20px;
+            margin:20px;
         }
         #textbox {
-       font-size: 18pt;
-        height: 42px;
-        width : 1000px;
+            font-size: 18pt;
+            height: 42px;
+            width : 1000px;
         }
         #textboxes {
-       font-size: 18pt;
-        height: 42px;
-        width : 1000px;
+            font-size: 18pt;
+            height: 42px;
+            width : 1000px;
         }
         footer{
-        background-color:black;
-        text-align:center;
-        margin:0px;
-        padding:0px;
-        color:white;
-        font-size:20px;
+            background-color:rgba(40, 29, 41, 1);
+            text-align:center;
+            margin:0px;
+            padding:0px;
+            color:white;
+            font-size:20px;
         }
 
     </style>
 </head>
 <body>
-    <header class="feature-box right">
-        <nav>
-            <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/FrontPage">Video</a></li>
-            <li><a href="/webcam">LiveWebcam</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="feature-box right">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid" style="padding-left: 40px;padding-right: 40px;">
+            <a class="navbar-brand" href="/home" style="width:auto;">
+                <img src="static/images/logo1.png" alt="Pistol" width="70" height="44">
+            </a>
+            <div class="d-flex justify-content-center" style="width: 100%;">
+                <div class id="navbarSupportedContent" ;
+                "
+                ">
+                <ul style="font-size: 24px; margin: 0!important;"
+                "
+                ">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/FrontPage">Video</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/webcam">Webcam</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/predictions">Predictions</a>
+                </li>
 
-    <header class="feature-box below">
-    </header>
-
-
-    <section class="details">
-        <h1>Примеры изображений из датасета</h1>
-
-    </section>
-    <section class="features">
-        <figure>
-            <img src="../static/images/1.jpg" alt="YOLOv8 Results 1">
-            <figcaption>Пример изображения 1</figcaption>
-        </figure>
-        <figure>
-            <img src="../static/images/2.jpg" alt="YOLOv8 Results 2">
-            <figcaption>Пример изображения 2</figcaption>
-        </figure>
-        <figure>
-            <img src="../static/images/3.jpg" alt="YOLOv8 Results 3">
-            <figcaption>Пример изображения 3</figcaption>
-    </figure>
-    </section>
-    <div class="main">
-        <div class="subpart1">
-            <h1>Weapon Detection используя YOLO8</h1><br>
-            <h4> FPS в видео</h4>
-            <p>FPS представляет собой частоту кадров, в случае GPU FPS будет высоким, в то время как в случае CPU FPS будет низким.</p><br>
-            <h4>Актуальность</h4>
-            <p>Актуальность этой работы заключается в ее потенциале улучшить общественную безопасность в местах, таких как школы или университеты, путем использования передовых методов глубокого обучения для обнаружения и предотвращения потенциального вреда, причиняемого оружием.
-</p><br>
-            <h4>Выбор оружия для датасета</h4>
-            <p>Чаще всего используются пистолеты, ножи и различные винтовки. </p><br>
-
+                </ul>
+            </div>
         </div>
+    </nav>
+</header>
 
-      <div class="subpart2"><figure>
-      <img src="../static/images/5.jpg"  alt="Image Missing">
-          <figcaption>Образец результата обнаружения</figcaption>
+<section class="features">
+    <figure>
+        <img src="../static/images/1.png" alt="YOLOv8 Results 1">
+    </figure>
+    <figure>
+        <img src="../static/images/2.png" alt="YOLOv8 Results 2">
+    </figure>
+    <figure>
+        <img src="../static/images/3.png" alt="YOLOv8 Results 3">
+    </figure>
+</section>
+
+<div class="main d-flex justify-content-between">
+    <div class="textpart">
+        <h1>Weapon Detection YOLO8</h1><br>
+        <h4>Актуальность</h4>
+        <p>Современные технологии искусственного интеллекта и машинного обучения открывают новые возможности для
+            улучшения безопасности и предотвращения преступлений. Одной из актуальных задач в этой области является
+            разработка системы, способной автоматически обнаруживать оружие на изображениях, полученных с камер
+            наблюдения. Такая система может быть использована для предупреждения о возможных угрозах в общественных
+            местах, таких как аэропорты, вокзалы, школы и т.д.
+        </p><br>
+        <h4>Выбор оружия для датасета</h4>
+        <p>Чаще всего используются пистолеты, ножи и различные винтовки. </p><br>
+
+    </div>
+
+    <div class="subpart2">
+        <figure>
+            <img src="../static/images/5.jpg" alt="Image Missing">
         </figure>
-      </div>
-  </div>
+    </div>
 
-<div class="contactpage">
-    <h1>Contact</h1><br>
-    <p>В случае каких-либо вопросов дайте мне знать</p>
-        <form action="/action_page.php" target="_blank" >
-            <p><input type="text" placeholder="Имя"  required name="Имя"  id="textbox"></p>
-            <p><input type="text" placeholder="Email ID" required name="Email ID" id="textboxes"></p>
-            <p><button type="submit">Отправить сообщение</button></p>
-        </form>
 </div>
 
 <footer>
     <p>YOLOv8</p>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

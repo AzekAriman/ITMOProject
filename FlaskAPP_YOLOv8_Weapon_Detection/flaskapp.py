@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, jsonify, request, session
+from flask import Flask, render_template, Response, jsonify, request, session, send_from_directory
 
 # FlaskForm--> it is required to receive input from the user
 # Whether uploading a video file  to our object detection model
@@ -16,12 +16,12 @@ import cv2
 # YOLO_Video is the python file which contains the code for our object detection model
 # Video Detection is the Function which performs Object Detection on Input Video
 from YOLO_Video import video_detection
+import datetime
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'mhotep'
 app.config['UPLOAD_FOLDER'] = 'static/files'
-
 
 # Use FlaskForm to get input video file  from user
 class UploadFileForm(FlaskForm):
@@ -82,6 +82,11 @@ def front():
                                              secure_filename(file.filename))
     return render_template('videoprojectnew.html', form=form)
 
+@app.route('/predictions')
+def predictions():
+    image_names = os.listdir('static/Predictions')
+    return render_template("predictions.html", image_names=image_names)
+
 
 @app.route('/video')
 def video():
@@ -95,7 +100,6 @@ def video():
 def webapp():
     # return Response(generate_frames(path_x = session.get('video_path', None),conf_=round(float(session.get('conf_', None))/100,2)),mimetype='multipart/x-mixed-replace; boundary=frame')
     return Response(generate_frames_web(path_x=0), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
