@@ -20,7 +20,7 @@ import datetime
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'mhotep'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mhotep')
 app.config['UPLOAD_FOLDER'] = 'static/files'
 
 # Use FlaskForm to get input video file  from user
@@ -103,3 +103,4 @@ def webapp():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
