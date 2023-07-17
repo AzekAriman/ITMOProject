@@ -24,7 +24,7 @@ moviepy-cli==1.0.1
 mpmath==1.3.0
 networkx==3.1
 numpy==1.25.0
-opencv-python==4.7.0.72
+opencv-python==4.8.0.74
 packaging==23.1
 pandas==2.0.3
 path==16.7.1
