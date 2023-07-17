@@ -21,7 +21,7 @@ import datetime
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'mhotep')
-app.config['UPLOAD_FOLDER'] = 'static/files'
+app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER', './static/files')
 
 # Use FlaskForm to get input video file  from user
 class UploadFileForm(FlaskForm):
@@ -84,7 +84,7 @@ def front():
 
 @app.route('/predictions')
 def predictions():
-    image_names = os.listdir('static/Predictions')
+    image_names = os.listdir('./static/Predictions')
     return render_template("predictions.html", image_names=image_names)
 
 
@@ -102,5 +102,7 @@ def webapp():
     return Response(generate_frames_web(path_x=0), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    current_directory = os.getcwd()
+    print(current_directory)
+    app.run(debug=True, host='0.0.0.0', port=5000)
 

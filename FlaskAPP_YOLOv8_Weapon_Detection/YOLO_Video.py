@@ -12,8 +12,9 @@ def video_detection(path_x):
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     # out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
-
-    model = YOLO("../YOLO-Weights/ppe.pt")
+    current_directory = os.getcwd()
+    print(current_directory)
+    model = YOLO("./YOLO-Weights/ppe.pt")
     classNames = ["Weapon"]
 
     frame_count = -1
@@ -42,7 +43,7 @@ def video_detection(path_x):
                     cv2.rectangle(img, (x1, y1), c2, color, -1, cv2.LINE_AA)  # filled
                     cv2.putText(img, label, (x1, y1 - 2), 0, 1, [255, 255, 255], thickness=1, lineType=cv2.LINE_AA)
                 if conf > 0.7:
-                    dir_name = "static/Predictions"
+                    dir_name = "./static/Predictions"
                     # Проверяем, существует ли директория
                     if not os.path.exists(dir_name):
                         os.makedirs(dir_name)  # Создаем директорию, если ее нет
@@ -75,5 +76,3 @@ def video_detection(path_x):
         # break
     # out.release()
 
-
-cv2.destroyAllWindows()
