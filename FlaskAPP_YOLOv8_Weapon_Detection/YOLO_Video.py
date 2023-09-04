@@ -11,11 +11,13 @@ def video_detection(path_x):
     cap = cv2.VideoCapture(video_capture)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
+    print(frame_width)
+    print(frame_height)
     # out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
     current_directory = os.getcwd()
     print(current_directory)
-    model = YOLO("./YOLO-Weights/ppe.pt")
-    classNames = ["Weapon"]
+    model = YOLO("./YOLO-Weights/best_YOLO.pt")
+    classNames = ["empty", "full"]
 
     frame_count = -1
     skip_frames = 20  # Количество кадров для пропуска между сохранениями
@@ -31,13 +33,17 @@ def video_detection(path_x):
                 print(x1, y1, x2, y2)
                 conf = math.ceil((box.conf[0] * 100)) / 100
                 cls = int(box.cls[0])
+                print(cls)
                 class_name = classNames[cls]
+                print(class_name)
                 label = f'{class_name}{conf}'
                 t_size = cv2.getTextSize(label, 0, fontScale=1, thickness=2)[0]
                 print(t_size)
                 c2 = x1 + t_size[0], y1 - t_size[1] - 3
-                if class_name == 'Weapon':
-                    color = (145, 104, 255)
+                if class_name == 'full':
+                    color = (45, 194, 255)
+                else:
+                    color = (12, 255, 34)
                 if conf > 0.25:
                     cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
                     cv2.rectangle(img, (x1, y1), c2, color, -1, cv2.LINE_AA)  # filled
